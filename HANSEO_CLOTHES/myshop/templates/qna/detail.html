@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block body_class %}mypage-bg{% endblock %}
+
+{% block content %}
+<h2>{{ qna.title }}</h2>
+
+<p><strong>작성일:</strong> {{ qna.created_at|date:"Y.m.d H:i" }}</p>
+
+<h3>문의 내용</h3>
+<div style="background:#fff; padding:16px; border-radius:8px;">
+    {{ qna.question }}
+</div>
+
+<br>
+
+<h3>답변</h3>
+{% if qna.answer %}
+<div style="background:#e8f5e9; padding:16px; border-radius:8px;">
+    {{ qna.answer }}
+</div>
+{% else %}
+<div style="background:#fff3cd; padding:16px; border-radius:8px;">
+    아직 답변이 등록되지 않았습니다.
+</div>
+{% endif %}
+
+{% endblock %}

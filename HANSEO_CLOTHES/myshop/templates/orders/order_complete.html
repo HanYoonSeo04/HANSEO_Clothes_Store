@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>주문 완료!</h2>
+
+<p>주문 번호: {{ order.id }}</p>
+
+<ul>
+    {% for item in order_items %}
+        <li>{{ item.product.name }} x {{ item.quantity }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

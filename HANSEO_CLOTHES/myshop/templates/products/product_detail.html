@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="display:flex; gap:40px;">
+
+    <img src="{{ product.image.url }}" 
+         style="width:400px; height:500px; object-fit:cover; border-radius:12px; box-shadow:0 3px 10px rgba(0,0,0,0.1);">
+
+    <div>
+        <h2 style="font-size:32px;">{{ product.name }}</h2>
+        <p style="font-size:22px; font-weight:600; color:#0078ff;">
+            {{ product.price }}원
+        </p>
+
+        <p style="margin-top:20px; font-size:16px; color:#555;">
+            {{ product.description }}
+        </p>
+
+        <a href="/orders/add/{{ product.id }}/" class="btn" style="margin-top:25px; display:inline-block;">
+            장바구니 담기
+        </a>
+    </div>
+
+</div>
+<h2>리뷰</h2>
+
+{% for r in product.reviews.all %}
+<div class="review-card">
+    <strong>{{ r.user.username }}</strong>
+
+    ⭐ {{ r.rating }} / 5
+
+    <p>{{ r.content }}</p>
+
+    {% if r.image %}
+        <img src="{{ r.image.url }}" style="width:150px;">
+    {% endif %}
+
+    <p><small>{{ r.created_at }}</small></p>
+</div>
+<hr>
+{% empty %}
+<p>아직 리뷰가 없습니다. 첫 리뷰를 작성해보세요!</p>
+{% endfor %}
+
+<a href="{% url 'reviews:create' product.id %}" class="btn">리뷰 작성하기</a>
+
+
+
+{% endblock %}

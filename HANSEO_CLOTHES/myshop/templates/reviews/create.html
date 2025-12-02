@@ -1,0 +1,25 @@
+<h2>{{ product.name }} 리뷰 작성</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <label>별점:</label>
+    <select name="rating" required>
+        <option value="5">★★★★★ (5)</option>
+        <option value="4">★★★★☆ (4)</option>
+        <option value="3">★★★☆☆ (3)</option>
+        <option value="2">★★☆☆☆ (2)</option>
+        <option value="1">★☆☆☆☆ (1)</option>
+    </select>
+
+    <br><br>
+    <label>내용</label><br>
+    <textarea name="content" rows="6" cols="50" required></textarea>
+
+    <br><br>
+    <label>사진 첨부</label>
+    <input type="file" name="image">
+
+    <br><br>
+    <button type="submit">리뷰 등록</button>
+</form>

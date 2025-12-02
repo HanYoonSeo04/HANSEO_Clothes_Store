@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>HANSEO CLOTHES</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            z-index: 10;
+        }
+
+        nav .logo {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        nav .menu a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        nav .menu a:hover {
+            color: #0078ff;
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* BUTTON STYLE */
+        .btn {
+            padding: 10px 18px;
+            background: #0078ff;
+            color: white;
+            border-radius: 6px;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #005fcc;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #111;
+            color: #bbb;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        /* 페이지별 배경 */
+        .product-bg {
+            background: url('/static/images/product_bg.jpg') no-repeat center/cover fixed;
+        }
+        .cart-bg {
+            background: url('/static/images/cart_bg.jpg') no-repeat center/cover fixed;
+        }
+        .mypage-bg {
+            background: url('/static/images/mypage_bg.jpg') no-repeat center/cover fixed;
+        }
+    </style>
+</head>
+
+<!-- 🔥 body는 딱 1개. 여기에서 페이지별 배경 적용 -->
+<body class="{% block body_class %}{% endblock %}">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="/">HANSEO CLOTHES</a>
+        </div>
+
+        <div class="menu">
+            <a href="/">Home</a>
+            <a href="/products/">Products</a>
+            <a href="/orders/cart/">Cart</a>
+
+            {% if user.is_authenticated %}
+                <a href="/accounts/mypage/">{{ user.username }}님</a>
+                <a href="/accounts/logout/">Logout</a>
+            {% else %}
+                <a href="/accounts/login/">Login</a>
+                <a href="/accounts/signup/">Signup</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        HANSEO CLOTHES © 2025 All rights reserved.
+    </footer>
+
+</body>
+</html>

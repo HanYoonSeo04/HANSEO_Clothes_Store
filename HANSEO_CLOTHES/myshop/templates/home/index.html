@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- 메인 배너 -->
+<div class="main-banner">
+    <img src="/static/images/main.jpg" alt="메인 배너 이미지">
+    <div class="banner-text">
+        <h1>2025 Collection</h1>
+        <p>새로운 시즌의 스타일을 지금 만나보세요.</p>
+        <a href="/products/" class="banner-btn">지금 쇼핑하기</a>
+    </div>
+</div>
+
+<style>
+    .main-banner {
+        position: relative;
+        width: 100%;
+        height: 380px;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 0 auto 40px auto;
+        max-width: 1200px;
+    }
+
+    .main-banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(70%);
+    }
+
+    .banner-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+    }
+
+    .banner-text h1 {
+        font-size: 42px;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .banner-text p {
+        font-size: 18px;
+        margin-bottom: 18px;
+    }
+
+    .banner-btn {
+        padding: 12px 24px;
+        background: #0066ff;
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .banner-btn:hover {
+        background: #004ecc;
+    }
+</style>
+
+
+<br><br>
+
+<!-- MAIN CATEGORY -->
+
+<div id="mainCategory" class="main-category-box">
+    <button class="category-btn" onclick="selectCategory('상의')">상의</button>
+    <button class="category-btn" onclick="selectCategory('하의')">하의</button>
+    <button class="category-btn" onclick="selectCategory('악세사리')">악세사리</button>
+    <button class="category-btn" onclick="selectCategory('신발')">신발</button> <!-- 추가됨 -->
+</div>
+
+<!-- SUB CATEGORY -->
+<div id="subCategory" class="sub-category-box"></div>
+
+
+<!-- CSS STYLE -->
+<style>
+    /* 기본 */
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .hero {
+        background:white;
+        padding:60px 20px;
+        text-align:center;
+        border-radius:12px;
+        box-shadow:0 4px 14px rgba(0,0,0,0.08);
+    }
+    .hero h2 {
+        font-size:40px;
+        margin-bottom:15px;
+        font-weight:700;
+    }
+    .hero p {
+        font-size:18px;
+        color:#555;
+        max-width:600px;
+        margin:auto;
+    }
+    .hero-buttons {
+        margin-top:30px;
+        display:flex;
+        justify-content:center;
+        gap:15px;
+        flex-wrap:wrap;
+    }
+
+    /* 버튼 */
+    .btn {
+        padding: 12px 20px;
+        background:#0078ff;
+        color:white;
+        border-radius:6px;
+        text-decoration:none;
+        font-size:16px;
+        display:inline-block;
+    }
+    .btn.dark {
+        background:#444;
+    }
+
+    /* 메인 카테고리 */
+    .main-category-box {
+        display:flex;
+        flex-wrap:wrap;
+        gap:14px;
+        margin-bottom:20px;
+        justify-content: center;
+    }
+
+    .category-btn {
+        padding: 12px 20px;
+        font-size:16px;
+        background:#eee;
+        border:none;
+        border-radius:8px;
+        cursor:pointer;
+        transition:0.2s;
+        white-space: nowrap;
+
+        flex-shrink: 0;
+        min-width: 120px;
+        flex-grow: 0;
+    }
+    .category-btn:hover { background:#ddd; }
+
+    .active-category {
+        background:#0078ff;
+        color:white;
+    }
+
+    /* 세부 카테고리 — 반응형 자동폭 조절 */
+    .sub-category-box {
+        display:flex;
+        flex-wrap:wrap;
+        gap:10px;
+        margin-top:10px;
+        justify-content: center;
+    }
+
+    .sub-btn {
+        padding:10px 14px;
+        background:white;
+        border:1px solid #ddd;
+        border-radius:8px;
+        cursor:pointer;
+        transition:0.2s;
+        font-size:15px;
+
+        /* 반응형 비밀 코드 */
+        flex: 1 1 calc(25% - 10px);  /* 화면 4등분 */
+        min-width: 120px;            /* 너무 작아지는 것 방지 */
+        text-align:center;
+
+        white-space: nowrap;
+    }
+
+    .sub-btn:hover {
+        background:#0078ff;
+        color:white;
+    }
+
+    /* 반응형 화면 */
+    @media (max-width: 900px) {
+        .sub-btn {
+            flex: 1 1 calc(33.3% - 10px);  /* 화면 3등분 */
+        }
+    }
+
+    @media (max-width: 600px) {
+        .sub-btn {
+            flex: 1 1 calc(50% - 10px);  /* 화면 2등분 */
+        }
+    }
+
+    @media (max-width: 400px) {
+        .sub-btn {
+            flex: 1 1 100%;  /* 한 줄 하나 */
+        }
+    }
+</style>
+
+
+
+<!-- JAVASCRIPT -->
+<script>
+    // 세부 카테고리 데이터
+    const subCategories = {
+        "상의": {
+            "코트": "coat",
+            "자켓": "jacket",
+            "패딩": "padding",
+            "맨투맨": "mtm",
+            "후드티": "hoodie"
+        },
+        "하의": {
+            "청바지": "jeans",
+            "슬랙스": "slacks",
+            "조거팬츠": "jogger",
+            "반바지": "shorts"
+        },
+        "악세사리": {
+            "모자": "hat",
+            "가방": "bag",
+            "벨트": "belt",
+            "안경": "glasses"
+        },
+        "신발": {
+            "운동화": "sneakers",
+            "부츠": "boots",
+            "샌들": "sandals",
+            "로퍼": "loafers"
+        }
+    };
+
+    // 큰 카테고리 코드
+    const categoryKey = {
+        "상의": "top",
+        "하의": "bottom",
+        "악세사리": "acc",
+        "신발": "shoe"
+    };
+
+    function selectCategory(category) {
+        const buttons = document.querySelectorAll(".category-btn");
+
+        buttons.forEach(btn => btn.classList.remove("active-category"));
+        event.target.classList.add("active-category");
+
+        const subBox = document.getElementById("subCategory");
+        subBox.innerHTML = "";
+
+        for (let name in subCategories[category]) {
+            const code = subCategories[category][name];
+
+            const el = document.createElement("button");
+            el.classList.add("sub-btn");
+            el.textContent = name;
+
+            el.onclick = () => {
+                const cateCode = categoryKey[category];
+                window.location.href = `/products/?category=${cateCode}&sub=${code}`;
+            };
+
+            subBox.appendChild(el);
+        }
+    }
+</script>
+
+{% endblock %}

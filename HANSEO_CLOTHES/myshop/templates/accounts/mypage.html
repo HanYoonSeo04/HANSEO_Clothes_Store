@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block body_class %}mypage-bg{% endblock %}
+
+{% block content %}
+
+<div class="mypage-container">
+    <h2>{{ user.username }}님의 마이페이지</h2>
+
+    <div class="info-box">
+        <p><strong>아이디:</strong> {{ user.username }}</p>
+        <p><strong>이메일:</strong> {{ user.email }}</p>
+        <p><strong>가입일:</strong> {{ user.date_joined|date:"Y-m-d" }}</p>
+    </div>
+
+    <a href="/orders/history/" class="btn">주문 내역 보기</a>
+</div>
+
+<style>
+    .mypage-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+    .info-box {
+        margin: 20px 0;
+        padding: 15px;
+        background: #f4f4f4;
+        border-radius: 10px;
+    }
+    .btn {
+        padding: 10px 14px;
+        background: #0078ff;
+        color: white;
+        border-radius: 8px;
+        text-decoration:none;
+    }
+</style>
+<a href="/accounts/edit/" class="btn" style="
+    display:inline-block;
+    margin-top:20px;
+    background:#0078ff;
+    color:white;
+    padding:10px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;">
+    내 정보 수정하기
+</a>
+<a href="/qna/list/" class="btn">1:1 문의하기</a>
+
+
+
+{% endblock %}

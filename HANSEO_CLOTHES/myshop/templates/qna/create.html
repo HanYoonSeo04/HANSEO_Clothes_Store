@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body_class %}mypage-bg{% endblock %}
+
+{% block content %}
+<h2>문의하기</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>제목</label><br>
+    <input type="text" 
+    name="title" 
+    required style="width: 100%; padding: 8px;"
+    placeholder="문의 제목을 입력하세요.(ex. 상품 문의, 배송 문의 등등)"><br><br>
+
+    <label>내용</label><br>
+    <textarea name="question" 
+    rows="8" 
+    style="width: 100%;" 
+    required
+    placeholder="내용을 입력하세요.
+    ex.
+    아이디명: ___
+    문의 내용: ___(구체적으로 작성해주세요!)
+    이메일 주소: ___"></textarea><br><br>
+
+    <button type="submit" class="btn">등록하기</button>
+</form>
+{% endblock %}
