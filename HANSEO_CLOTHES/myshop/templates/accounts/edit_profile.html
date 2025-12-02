@@ -16,14 +16,22 @@
     <h3 class="subtitle">내 정보 수정</h3>
 
     {% if form.errors %}
-<div style="background:#ffe5e5; color:#c40000; padding:10px; border-radius:8px; margin-bottom:20px;">
-    수정할 수 없습니다. 입력한 값을 다시 확인해주세요.
-</div>
-{% endif %}
+    <div style="background:#ffe5e5; color:#c40000; padding:10px; border-radius:8px; margin-bottom:20px;">
+        수정할 수 없습니다. 입력한 값을 다시 확인해주세요.
+    </div>
+    {% endif %}
 
     <form method="post" class="form-box">
         {% csrf_token %}
         {{ form.as_p }}
+
+        <!-- 🎯 주소 입력 추가 위치 -->
+        <label>주소</label><br>
+        <input type="text" name="address" 
+               value="{{ request.user.profile.address }}" 
+               class="form-control"
+               style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+        <br><br>
 
         <button type="submit" class="save-btn">저장하기</button>
     </form>
@@ -31,9 +39,6 @@
     <a href="/orders/history/" class="history-btn">주문 내역 보기</a>
 
 </div>
-<label>주소</label>
-<input type="text" name="address" value="{{ request.user.profile.address }}" class="form-control">
-
 
 <style>
     .edit-container {

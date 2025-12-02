@@ -51,14 +51,16 @@ def mypage(request):
 
 
 # 내 정보 수정
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+
 @login_required
 def edit_profile(request):
-    if request.method == "POST":
-        form = UserEditForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect("accounts:mypage")  # 저장 후 마이페이지로 이동
-    else:
-        form = UserEditForm(instance=request.user)
+    profile = request.user.profile
 
-    return render(request, "accounts/edit_profile.html", {"form": form})
+    if request.method == "POST":
+        profile.address = request.POST.get("address")
+        profile.save()
+        return redirect("accounts:mypage")
+
+    return render(request, "accounts/edit_profile.html", {"profile": profile})
