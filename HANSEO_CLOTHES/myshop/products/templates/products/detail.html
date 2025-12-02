@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>{{ product.name }}</h2>
+
+<img src="{{ product.image.url }}" style="width:350px; border-radius:10px;">
+
+<p>{{ product.description }}</p>
+<p><strong>{{ product.price }}원</strong></p>
+
+<a class="btn" href="/orders/add/{{ product.id }}/">장바구니 담기</a>
+
+<hr>
+
+<h3>상품 리뷰</h3>
+
+{% if user.is_authenticated %}
+    <form method="POST" action="/reviews/add/{{ product.id }}/" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>별점</label>
+        <select name="rating">
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★☆</option>
+            <option value="3">★★★☆☆</option>
+            <option value="2">★★☆☆☆</option>
+            <option value="1">★☆☆☆☆</option>
+        </select><br><br>
+
+        <textarea name="content" placeholder="리뷰를 입력하세요" required></textarea><br><br>
+
+        <label>사진 첨부</label>
+        <input type="file" name="image"><br><br>
+
+        <button type="submit" class="btn">리뷰 등록</button>
+    </form>
+{% else %}
+<p>리뷰를 작성하려면 로그인하세요.</p>
+{% endif %}
+
+<hr>
+
+{% for r in reviews %}
+    <div class="review">
+        <strong>{{ r.user.username }}</strong>  
+        <span>⭐ {{ r.rating }}</span>
+
+        <p>{{ r.content }}</p>
+
+        {% if r.image %}
+            <img src="{{ r.image.url }}" style="width:120px; border-radius:6px;">
+        {% endif %}
+    </div>
+    <hr>
+{% empty %}
+<p>아직 리뷰가 없습니다.</p>
+{% endfor %}
+
+{% endblock %}

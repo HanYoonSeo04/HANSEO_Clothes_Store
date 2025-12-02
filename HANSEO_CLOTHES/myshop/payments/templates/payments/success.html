@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>결제가 완료되었습니다!</h2>
+
+<p>결제번호: {{ payment.id }}</p>
+<p>주문번호: {{ payment.order.id }}</p>
+
+<a href="/orders/history/" class="btn">주문 내역 보기</a>
+
+{% endblock %}

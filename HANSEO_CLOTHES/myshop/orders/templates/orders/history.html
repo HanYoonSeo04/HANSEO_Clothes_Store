@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>주문 내역</h2>
+
+{% for order in orders %}
+    <div class="order-box">
+        <p>주문번호: {{ order.id }}</p>
+        <p>상태: {{ order.status }}</p>
+        <p>주문일: {{ order.created_at|date:"Y-m-d H:i" }}</p>
+
+        <strong>상품 목록:</strong>
+        <ul>
+        {% for item in order.items.all %}
+            <li>{{ item.product.name }} / {{ item.quantity }}개</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% empty %}
+    <p>주문 내역이 없습니다.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>문의 작성</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <input type="text" name="title" placeholder="제목" required><br><br>
+
+    <select name="category">
+        <option value="product">상품 문의</option>
+        <option value="order">주문/결제 문의</option>
+        <option value="delivery">배송 문의</option>
+        <option value="etc">기타 문의</option>
+    </select><br><br>
+
+    <textarea name="content" placeholder="문의 내용을 입력하세요" required></textarea><br><br>
+
+    <input type="file" name="image">
+
+    <button type="submit">등록</button>
+</form>
+
+{% endblock %}

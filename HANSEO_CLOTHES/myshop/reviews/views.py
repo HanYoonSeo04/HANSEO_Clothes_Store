@@ -1,24 +1,19 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from products.models import Product
+from django.shortcuts import redirect, get_object_or_404
 from .models import Review
+from products.models import Product
 
-@login_required
-def create_review(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-
+def add_review(request, product_id):
     if request.method == "POST":
-        rating = request.POST.get("rating")
-        content = request.POST.get("content")
-        image = request.FILES.get("image")
+        product = get_object_or_404(Product, id=product_id)
 
         Review.objects.create(
             product=product,
             user=request.user,
-            rating=rating,
-            content=content,
-            image=image
+            rating=request.POST.get("rating"),
+            content=request.POST.get("content"),
+            image=request.FILES.get("image")
         )
-        return redirect("/products/" + str(product_id))
 
-    return render(request, "reviews/create.html", {"product": product})
+        return redirect("products:detail", product_id)
+
+    return redirect("products:list")

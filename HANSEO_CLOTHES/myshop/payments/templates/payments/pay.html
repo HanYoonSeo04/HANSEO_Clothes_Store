@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>계좌이체 결제</h2>
+
+<h3>입금 정보</h3>
+<p>은행명: 한서은행</p>
+<p>계좌번호: 123-456-7890</p>
+<p>예금주: HANSEO CLOTHES</p>
+
+<hr>
+
+<h3>결제 금액: {{ total }}원</h3>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>입금자명</label><br>
+    <input type="text" name="depositor_name" required><br><br>
+
+    <button type="submit">입금 완료 후 확인</button>
+</form>
+
+{% endblock %}

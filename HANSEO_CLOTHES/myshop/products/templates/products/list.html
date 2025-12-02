@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>전체 상품</h2>
+
+<div class="product-grid">
+    {% for product in products %}
+        <div class="product-card">
+            <a href="/products/{{ product.id }}/">
+                <img src="{{ product.image.url }}" class="thumb">
+            </a>
+            <p>{{ product.name }}</p>
+            <strong>{{ product.price }}원</strong>
+        </div>
+    {% endfor %}
+</div>
+
+<style>
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.thumb {
+    width: 100%;
+    border-radius: 8px;
+}
+.product-card {
+    text-align: center;
+}
+</style>
+
+{% endblock %}

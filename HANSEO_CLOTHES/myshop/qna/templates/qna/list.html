@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>1:1 문의 내역</h2>
+
+<a href="/qna/create/" class="btn">새 문의 작성</a>
+<hr>
+
+{% for q in qnas %}
+    <div class="qna-box">
+        <h4>{{ q.title }}</h4>
+        <p>카테고리: {{ q.get_category_display }}</p>
+        <p>{{ q.content }}</p>
+
+        {% if q.image %}
+            <img src="{{ q.image.url }}" style="width:150px;">
+        {% endif %}
+
+        {% if q.reply %}
+            <hr>
+            <strong>관리자 답변:</strong>
+            <p>{{ q.reply }}</p>
+        {% endif %}
+    </div>
+    <hr>
+{% empty %}
+<p>문의 내역이 없습니다.</p>
+{% endfor %}
+
+{% endblock %}

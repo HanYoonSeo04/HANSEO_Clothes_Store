@@ -1,20 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Product
+from reviews.models import Review
 
 def product_list(request):
-    category = request.GET.get("category")
-    sub = request.GET.get("sub")
-
     products = Product.objects.all()
+    return render(request, "products/list.html", {"products": products})
 
-    if category:
-        products = products.filter(category=category)
-    if sub:
-        products = products.filter(subcategory=sub)
-
-    return render(request, "products/product_list.html", {"products": products})
-
-
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    return render(request, 'products/product_detail.html', {"product": product})
+def product_detail(request, id):
+    product = get_object_or_404(Product, id=id)
+    reviews = Review.objects.filter(product=product).order_by("-created_at")
+    return render(request, "products/detail.html", {
+        "product": product,
+        "reviews": reviews,
+    })
