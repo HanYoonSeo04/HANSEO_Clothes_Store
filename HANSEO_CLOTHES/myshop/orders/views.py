@@ -72,3 +72,12 @@ def order_complete(request, order_id):
 def order_history(request):
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'orders/order_history.html', {"orders": orders})
+
+@login_required
+def checkout(request):
+    if not request.user.profile.address:
+        return redirect("/accounts/edit/?error=need_address")
+
+    cart_items = CartItem.objects.filter(user=request.user)
+
+    return render(request, "orders/checkout.html", {"cart_items": cart_items})
